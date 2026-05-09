@@ -52,10 +52,9 @@ def inject_css(p="#2D6A4F"):
     st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-*, *::before, *::after {{ font-family: 'Inter', sans-serif !important; box-sizing: border-box; }}
-html, body, .stApp {{ background: #FAFAFA !important; min-height: 100vh; }}
-#MainMenu, footer, .stDeployButton {{ visibility: hidden !important; height: 0 !important; }}
-.block-container {{ padding: 0 !important; max-width: 760px !important; }}
+html, body, .stApp {{ background: #FAFAFA !important; min-height: 100vh; font-family: 'Inter', sans-serif !important; }}
+[data-testid="stToolbar"], [data-testid="stHeaderActionElements"], [data-testid="stAppDeployButton"], #MainMenu, footer {{ display: none !important; }}
+.block-container {{ padding: 3.5rem 0 0 0 !important; max-width: 760px !important; }}
 
 /* ── Force Light Theme Text Colors (Fix for Streamlit Dark Mode) ── */
 .stApp .block-container h1, .stApp .block-container h2, .stApp .block-container h3, 
@@ -153,16 +152,21 @@ div.element-container:has(.options-marker) ~ div.element-container div[data-test
     justify-content: space-between !important;
     width: 100% !important;
     margin: 0 !important;
+    white-space: normal !important;
+    text-align: left !important;
 }}
 div.element-container:has(.options-marker) ~ div.element-container div[data-testid="stButton"] > button[kind="secondary"] p::after {{
     content: '';
     display: inline-block;
     width: 24px;
+    min-width: 24px;
     height: 24px;
+    min-height: 24px;
+    flex-shrink: 0;
     border: 2px solid #D1D5DB;
     border-radius: 6px;
     background-color: #FFFFFF;
-    margin-left: auto;
+    margin-left: 1rem;
     transition: all 0.2s;
 }}
 
