@@ -428,7 +428,7 @@ def show_survey(cfg):
                 for i, opt in enumerate(opts):
                     em = emojis_list[i] if i < len(emojis_list) else EMOJIS[i % len(EMOJIS)]
                     label = f"{em}  {opt}"
-                    if st.button(label, key=f"opt_{q['id']}_{i}"):
+                    if st.button(label, key=f"opt_{q['id']}_{i}", use_container_width=True):
                         ss.answers[q["id"]] = opt
                         st.rerun()
 
@@ -437,7 +437,7 @@ def show_survey(cfg):
             st.markdown(f'<div style="color: #6B7280; font-size: 0.95rem; text-align: center; margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 500; {msg_style}">Please choose your option to continue</div>', unsafe_allow_html=True)
             
             st.markdown('<div id="action-btn-single">', unsafe_allow_html=True)
-            if st.button("Next →", key=f"next_{q['id']}", disabled=not current_ans, type="primary"):
+            if st.button("Next →", key=f"next_{q['id']}", disabled=not current_ans, type="primary", use_container_width=True):
                 if idx < total - 1:
                     ss.current_q += 1
                 else:
@@ -465,6 +465,7 @@ def show_survey(cfg):
                 key="email_next",
                 disabled=not can,
                 type="primary",
+                use_container_width=True,
             ):
                 if idx < total - 1:
                     ss.current_q += 1
@@ -488,7 +489,7 @@ def show_survey(cfg):
             ss.answers[q["id"]] = val
             st.markdown("<br>", unsafe_allow_html=True)
             st.markdown('<div id="action-btn-txt">', unsafe_allow_html=True)
-            if st.button("Next →", key="txt_next", disabled=not (val or "").strip(), type="primary"):
+            if st.button("Next →", key="txt_next", disabled=not (val or "").strip(), type="primary", use_container_width=True):
                 if idx < total - 1:
                     ss.current_q += 1
                 else:
