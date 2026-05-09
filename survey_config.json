@@ -1,0 +1,133 @@
+{
+  "brand": {
+    "name": "Rachel's Tea",
+    "tagline": "Natural Digestive Health Solutions",
+    "primary_color": "#2D6A4F",
+    "accent_color": "#95D5B2",
+    "background_color": "#F4FAF7",
+    "logo_emoji": "🍵"
+  },
+  "survey_title": "Digestive Health Assessment",
+  "survey_subtitle": "Answer a few quick questions to get your personalized digestive health profile.",
+  "admin_password": "Zee2025",
+  "questions": [
+    {
+      "id": "q3",
+      "text": "Do you ever experience digestive flare-ups?",
+      "type": "single_choice",
+      "options": [
+        "Yes, I'm having one right now",
+        "Yes, occasionally",
+        "No, never"
+      ],
+      "required": true
+    },
+    {
+      "id": "q1",
+      "text": "Do you experience constipation?",
+      "type": "single_choice",
+      "options": [
+        "Yes",
+        "No",
+        "Yes",
+        "Not sure"
+      ],
+      "required": true
+    },
+    {
+      "id": "q4",
+      "text": "At home or work, do you experience situations that cause anxiety or stress?",
+      "type": "single_choice",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "id": "q5",
+      "text": "Do you ever experience heartburn?",
+      "type": "single_choice",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "id": "q6",
+      "text": "Do you have excessive yeast issues or intense sugar cravings?",
+      "type": "single_choice",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "id": "q7",
+      "text": "Do you ever have bloating or uncomfortable swelling in your stomach?",
+      "type": "single_choice",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "id": "q8",
+      "text": "How many times per week do you eat fast food?",
+      "type": "single_choice",
+      "options": [
+        "Never",
+        "1–3 times per week",
+        "More than 3 times per week"
+      ],
+      "required": true
+    },
+    {
+      "id": "q9",
+      "text": "How old were you when you started experiencing digestive symptoms?",
+      "type": "single_choice",
+      "options": [
+        "Under 20",
+        "21–30",
+        "31–40",
+        "41–50",
+        "51–60",
+        "61–70",
+        "Over 70"
+      ],
+      "required": true
+    },
+    {
+      "id": "q10",
+      "text": "Do you regularly experience diarrhea lasting more than 3 days?",
+      "type": "single_choice",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "id": "q11",
+      "text": "Please provide your email to receive your personalized digestive health plan!",
+      "type": "email",
+      "required": true
+    }
+  ],
+  "completion": {
+    "headline": "Your Digestive Health Profile is Ready!",
+    "subheadline": "Based on your answers, we’ve prepared personalized recommendations just for you.",
+    "result_intro": "Rachel’s Tea has helped thousands of people restore their digestive balance naturally.",
+    "offer_badge": "EXCLUSIVE GIFT FOR SURVEY COMPLETERS",
+    "offer_headline": "Claim Your FREE Digestive Health Gummies!",
+    "offer_body": "As a thank-you for completing this assessment, we’re gifting you a full supply of our premium digestive gummies — absolutely FREE! You only cover the small shipping fee.",
+    "offer_price": "$14.97",
+    "offer_price_label": "shipping only",
+    "cta_label": "Claim My FREE Gummies →",
+    "cta_url": "https://rachelstea.com/collections/all-products/products/rachel-s-tummy-gummies-our-family-s-new-addiction",
+    "disclaimer": "Limited time offer. One per customer. While supplies last."
+  }
+}

@@ -1,0 +1,15 @@
+timestamp,session_id,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10
+2026-05-06 20:45:46,5bc7cc0b-89c0-4345-9c41-fda0890cb302,Yes,Yes,"Yes, I'm having one right now",No,Yes,No,Yes,More than 3 times per week,21–30,Yes
+2026-05-06 20:49:56,7e761efb-0c6a-4321-986f-9ae85142878b,Yes,Yes,"Yes, I'm having one right now",Yes,Yes,Yes,Yes,Never,Under 20,Yes
+2026-05-06 22:01:01,7686c5e3-50a7-4f2a-88cc-d5ceffd0a6c3,Yes,Yes,"Yes, I'm having one right now",Yes,Yes,Yes,Yes,Never,Under 20,Yes,test@example.com
+2026-05-06 22:13:54,bfa27c27-8330-4da4-944e-e8c8bfdc528e,Yes,Yes,"Yes, I'm having one right now",Yes,Yes,Yes,Yes,Never,Under 20,Yes,sarah@example.com
+2026-05-06 22:21:11,6abe8b1e-79bf-4ac6-afdc-b5bc0ca282a0,Yes,Yes,"Yes, I'm having one right now",Yes,Yes,Yes,Yes,Never,Under 20,Yes,sarah@test.com
+2026-05-06 22:27:18,18ca674c-22e9-4d97-834d-55329c480f30,Yes,Yes,"Yes, I'm having one right now",Yes,Yes,Yes,Yes,Never,Under 20,Yes,test@test.com
+2026-05-06 22:29:16,2cbb3d60-5b0e-4ac6-b171-42f8021b0395,Yes,No,"Yes, I'm having one right now",Yes,No,Yes,No,Never,21–30,Yes,rda@gmail.com
+2026-05-06 22:30:20,ad90a9bc-2702-4580-a1b1-5dcfd7669523,Yes,No,"Yes, occasionally",No,Yes,No,Yes,1–3 times per week,21–30,Yes,h@gmail.com
+2026-05-06 22:31:38,12463d7c-5e59-4cae-8d1d-cdfd7b8bfe77,No,Yes,"Yes, occasionally",Yes,No,Yes,No,Never,21–30,Yes,demo@rachels.com
+2026-05-06 22:36:40,5dc241a2-bafb-435b-bf40-553f4244984b,Yes,Yes,"Yes, I'm having one right now",Yes,No,Yes,Yes,Never,Under 20,Yes,demo@rachels.com
+2026-05-07 19:58:06,e8647e4d-1b87-4d14-8bdc-2754b9f0968e,Yes,No,"Yes, I'm having one right now",Yes,No,Yes,No,Never,21–30,No,test@example.com
+2026-05-07 21:18:05,bc7544f4-7343-45b9-9dde-91d6b78df6c7,Yes,No,"Yes, I'm having one right now",No,Yes,No,Yes,1–3 times per week,Under 20,No,test@example.com
+2026-05-07 21:28:49,6c1b2425-f095-43b9-813c-67b5d2fb70d6,Yes,Yes,"Yes, I'm having one right now",Yes,Yes,Yes,Yes,Never,Under 20,Yes,test@test.com
+2026-05-08 16:29:30,dc2ae0cc-7f3f-45d3-ae90-4f55513cda2b,Yes,No,"Yes, occasionally",No,Yes,No,No,More than 3 times per week,Under 20,No,jjp@gmail.com
