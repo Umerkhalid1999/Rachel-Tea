@@ -81,16 +81,19 @@ html, body, .stApp {{ background: #FAFAFA !important; min-height: 100vh; font-fa
 }}
 
 /* Force Sidebar Toggle to be Visible and Dark */
-[data-testid="collapsedControl"] {{
+[data-testid="stExpandSidebarButton"], [data-testid="collapsedControl"] {{
     display: flex !important;
     visibility: visible !important;
     color: #1F2937 !important;
     background-color: rgba(255, 255, 255, 0.5) !important;
     border-radius: 50% !important;
 }}
-[data-testid="collapsedControl"] svg {{
+[data-testid="stExpandSidebarButton"] [data-testid="stIconMaterial"], [data-testid="collapsedControl"] svg {{
     fill: #1F2937 !important;
     color: #1F2937 !important;
+}}
+[data-testid="stIconMaterial"] {{
+    font-family: 'Material Symbols Rounded', 'Material Icons' !important;
 }}
 
 /* ── Banner ── */
@@ -156,17 +159,13 @@ div.element-container:has(.options-marker) ~ div.element-container div[data-test
     box-shadow: 0 2px 8px rgba(0,0,0,0.02) !important;
     margin-bottom: .6rem !important;
 }}
-div.element-container:has(.options-marker) ~ div.element-container div[data-testid="stButton"] > button[kind="secondary"] > div,
-div.element-container:has(.options-marker) ~ div.element-container div[data-testid="stButton"] > button[kind="secondary"] div[data-testid="stMarkdownContainer"] {{
+div.element-container:has(.options-marker) ~ div.element-container div[data-testid="stButton"] > button[kind="secondary"] * {{
     width: 100% !important;
-    flex: 1 !important;
 }}
 div.element-container:has(.options-marker) ~ div.element-container div[data-testid="stButton"] > button[kind="secondary"] p {{
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    width: 100% !important;
-    flex: 1 !important;
     margin: 0 !important;
     white-space: normal !important;
     text-align: left !important;
