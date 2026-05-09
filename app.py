@@ -53,7 +53,7 @@ def inject_css(p="#2D6A4F"):
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 html, body, .stApp {{ background: #FAFAFA !important; min-height: 100vh; font-family: 'Inter', sans-serif !important; }}
-[data-testid="stToolbar"], [data-testid="stHeaderActionElements"], [data-testid="stAppDeployButton"], #MainMenu, footer {{ display: none !important; }}
+[data-testid="stToolbar"], [data-testid="stAppDeployButton"], #MainMenu, footer {{ display: none !important; }}
 .block-container {{ padding: 3.5rem 0 0 0 !important; max-width: 760px !important; }}
 
 /* ── Force Light Theme Text Colors (Fix for Streamlit Dark Mode) ── */
@@ -143,6 +143,7 @@ div.element-container:has(.options-marker) ~ div.element-container div[data-test
     box-shadow: 0 2px 8px rgba(0,0,0,0.02) !important;
     margin-bottom: .6rem !important;
 }}
+div.element-container:has(.options-marker) ~ div.element-container div[data-testid="stButton"] > button[kind="secondary"] > div,
 div.element-container:has(.options-marker) ~ div.element-container div[data-testid="stButton"] > button[kind="secondary"] div[data-testid="stMarkdownContainer"] {{
     width: 100% !important;
 }}
