@@ -362,6 +362,7 @@ def show_survey(cfg):
     ss.setdefault("session_id", str(uuid.uuid4()))
     ss.setdefault("survey_complete", False)
     ss.setdefault("response_saved", False)
+    ss.setdefault("suggestion_to_show", None) # (suggestion_text, question_id, option_value)
 
     if ss.survey_complete:
         show_completion(cfg)
@@ -369,6 +370,30 @@ def show_survey(cfg):
 
     # Banner only shown for question screens (completion page renders its own)
     render_banner()
+
+    # ── Suggestion Screen ──
+    if ss.suggestion_to_show:
+        s_text, q_id, opt_val = ss.suggestion_to_show
+        st.markdown(f"""
+        <div style="padding: 2rem 1.6rem; text-align: center;">
+            <div style="font-size: 1.2rem; color: #6B7280; margin-bottom: 0.5rem;">Based on your answer: <b>{opt_val}</b></div>
+            <div style="background: #EEEDFE; border-left: 5px solid #6366F1; padding: 1.5rem; border-radius: 12px; text-align: left; margin-bottom: 2rem;">
+                <div style="color: #3730A3; font-size: 1.15rem; line-height: 1.6; font-weight: 500;">{s_text}</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("Continue →", key="continue_suggestion", type="primary"):
+            ss.suggestion_to_show = None
+            if ss.current_q < total - 1:
+                ss.current_q += 1
+            else:
+                if not ss.response_saved:
+                    save_response(ss.answers, cfg)
+                    ss.response_saved = True
+                ss.survey_complete = True
+            st.rerun()
+        return
 
     idx = ss.current_q
     if idx >= total:
@@ -453,13 +478,19 @@ def show_survey(cfg):
             
             st.markdown('<div id="action-btn-single">', unsafe_allow_html=True)
             if st.button("Next →", key=f"next_{q['id']}", disabled=not current_ans, type="primary", use_container_width=True):
-                if idx < total - 1:
-                    ss.current_q += 1
+                suggestions = q.get("suggestions", {})
+                suggestion = suggestions.get(current_ans)
+                
+                if suggestion:
+                    ss.suggestion_to_show = (suggestion, q["id"], current_ans)
                 else:
-                    if not ss.response_saved:
-                        save_response(ss.answers, cfg)
-                        ss.response_saved = True
-                    ss.survey_complete = True
+                    if idx < total - 1:
+                        ss.current_q += 1
+                    else:
+                        if not ss.response_saved:
+                            save_response(ss.answers, cfg)
+                            ss.response_saved = True
+                        ss.survey_complete = True
                 st.rerun()
             st.markdown("</div>", unsafe_allow_html=True)
 
@@ -552,11 +583,19 @@ def show_completion(cfg):
         short_q = q["text"][:60] + ("…" if len(q["text"]) > 60 else "")
         st.markdown(
             f'<div class="ans-row">'
-            f'<span class="ans-q">{short_q}</span>'
+            f'<span class="ans-q"><b>{short_q}</b></span>'
             f'<span class="ans-a">{ans}</span>'
             f"</div>",
             unsafe_allow_html=True,
         )
+        # Show suggestion in summary if it exists for this answer
+        suggestions = q.get("suggestions", {})
+        if ans in suggestions:
+            st.markdown(f"""
+            <div style="background: #F3F4F6; padding: 0.8rem 1rem; margin: 0 1rem 0.8rem; border-radius: 8px; font-size: 0.85rem; color: #4B5563;">
+                💡 <b>Suggestion:</b> {suggestions[ans]}
+            </div>
+            """, unsafe_allow_html=True)
 
     st.markdown(f"""
   </div>
@@ -566,6 +605,12 @@ def show_completion(cfg):
     <div class="cta-body">{c['offer_body']}</div>
     <a href="{c['cta_url']}" target="_blank" class="cta-btn">{c['cta_label']}</a>
     <div class="disc">{c['disclaimer']}</div>
+  </div>
+
+  <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 1.5rem; text-align: center; margin-bottom: 1.2rem;">
+    <div style="font-weight: 700; color: #111827; margin-bottom: 0.5rem;">Rachel Tea Community</div>
+    <div style="font-size: 0.9rem; color: #6B7280; margin-bottom: 1rem;">{c.get('community_message', '')}</div>
+    <a href="{c.get('community_url', '#')}" target="_blank" style="color: #6366F1; font-weight: 600; text-decoration: none; font-size: 0.95rem;">Join the Community Free →</a>
   </div>
 </div>""", unsafe_allow_html=True)
 
@@ -600,6 +645,18 @@ def show_admin(cfg):
                     opts_str = "\n".join(q.get("options", []))
                     new_opts = st.text_area("Options (one per line)", value=opts_str, key=f"qo_{i}", height=120)
                     cfg["questions"][i]["options"] = [o.strip() for o in new_opts.splitlines() if o.strip()]
+                    
+                    # ── Suggestions Editor ──
+                    st.markdown("---")
+                    st.markdown("#### 💡 Configure Suggestions")
+                    st.caption("If a user picks an option below, they will see this suggestion before moving to the next question.")
+                    suggestions = q.get("suggestions", {})
+                    new_suggestions = {}
+                    for j, opt in enumerate(cfg["questions"][i]["options"]):
+                        sug = st.text_area(f"Suggestion for '{opt}'", value=suggestions.get(opt, ""), key=f"qs_{i}_{j}", height=70)
+                        if sug.strip():
+                            new_suggestions[opt] = sug.strip()
+                    cfg["questions"][i]["suggestions"] = new_suggestions
                 c1, c2, c3 = st.columns(3)
                 with c1:
                     if i > 0 and st.button("⬆ Up", key=f"up_{i}"):
@@ -657,6 +714,7 @@ def show_admin(cfg):
             ("offer_badge","Offer Badge"), ("offer_headline","Offer Headline"), ("offer_body","Offer Body"),
             ("offer_price","Price"), ("offer_price_label","Price Label"),
             ("cta_label","CTA Button Text"), ("cta_url","CTA URL"), ("disclaimer","Disclaimer"),
+            ("community_message", "Community Message"), ("community_url", "Community URL"),
         ]:
             if field in textarea_fields:
                 c[field] = st.text_area(label, value=c[field], height=70)

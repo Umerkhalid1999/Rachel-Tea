@@ -12,6 +12,20 @@
   "admin_password": "Zee2025",
   "questions": [
     {
+      "id": "q1",
+      "text": "Do you experience constipation?",
+      "type": "single_choice",
+      "options": [
+        "Yes",
+        "No",
+        "Not sure"
+      ],
+      "required": true,
+      "suggestions": {
+        "Yes": "Various collaborative online encyclopedias were attempted before the start of Wikipedia, but with limited success. Wikipedia began as a complementary project for"
+      }
+    },
+    {
       "id": "q3",
       "text": "Do you ever experience digestive flare-ups?",
       "type": "single_choice",
@@ -20,19 +34,10 @@
         "Yes, occasionally",
         "No, never"
       ],
-      "required": true
-    },
-    {
-      "id": "q1",
-      "text": "Do you experience constipation?",
-      "type": "single_choice",
-      "options": [
-        "Yes",
-        "No",
-        "Yes",
-        "Not sure"
-      ],
-      "required": true
+      "required": true,
+      "suggestions": {
+        "Yes, I'm having one right now": "Please drink some warm ginger tea immediately for relief."
+      }
     },
     {
       "id": "q4",
@@ -42,7 +47,8 @@
         "Yes",
         "No"
       ],
-      "required": true
+      "required": true,
+      "suggestions": {}
     },
     {
       "id": "q5",
@@ -52,7 +58,8 @@
         "Yes",
         "No"
       ],
-      "required": true
+      "required": true,
+      "suggestions": {}
     },
     {
       "id": "q6",
@@ -62,7 +69,8 @@
         "Yes",
         "No"
       ],
-      "required": true
+      "required": true,
+      "suggestions": {}
     },
     {
       "id": "q7",
@@ -72,7 +80,8 @@
         "Yes",
         "No"
       ],
-      "required": true
+      "required": true,
+      "suggestions": {}
     },
     {
       "id": "q8",
@@ -83,7 +92,8 @@
         "1–3 times per week",
         "More than 3 times per week"
       ],
-      "required": true
+      "required": true,
+      "suggestions": {}
     },
     {
       "id": "q9",
@@ -98,7 +108,8 @@
         "61–70",
         "Over 70"
       ],
-      "required": true
+      "required": true,
+      "suggestions": {}
     },
     {
       "id": "q10",
@@ -108,7 +119,8 @@
         "Yes",
         "No"
       ],
-      "required": true
+      "required": true,
+      "suggestions": {}
     },
     {
       "id": "q11",
@@ -128,6 +140,8 @@
     "offer_price_label": "shipping only",
     "cta_label": "Claim My FREE Gummies →",
     "cta_url": "https://rachelstea.com/collections/all-products/products/rachel-s-tummy-gummies-our-family-s-new-addiction",
-    "disclaimer": "Limited time offer. One per customer. While supplies last."
+    "disclaimer": "Limited time offer. One per customer. While supplies last.",
+    "community_message": "Join our free support group!",
+    "community_url": "https://facebook.com/rachelstea"
   }
 }
