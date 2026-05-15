@@ -362,7 +362,6 @@ def show_survey(cfg):
     ss.setdefault("session_id", str(uuid.uuid4()))
     ss.setdefault("survey_complete", False)
     ss.setdefault("response_saved", False)
-    ss.setdefault("suggestion_to_show", None) # (suggestion_text, question_id, option_value)
 
     if ss.survey_complete:
         show_completion(cfg)
@@ -370,30 +369,6 @@ def show_survey(cfg):
 
     # Banner only shown for question screens (completion page renders its own)
     render_banner()
-
-    # ── Suggestion Screen ──
-    if ss.suggestion_to_show:
-        s_text, q_id, opt_val = ss.suggestion_to_show
-        st.markdown(f"""
-        <div style="padding: 2rem 1.6rem; text-align: center;">
-            <div style="font-size: 1.2rem; color: #6B7280; margin-bottom: 0.5rem;">Based on your answer: <b>{opt_val}</b></div>
-            <div style="background: #EEEDFE; border-left: 5px solid #6366F1; padding: 1.5rem; border-radius: 12px; text-align: left; margin-bottom: 2rem;">
-                <div style="color: #3730A3; font-size: 1.15rem; line-height: 1.6; font-weight: 500;">{s_text}</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("Continue →", key="continue_suggestion", type="primary"):
-            ss.suggestion_to_show = None
-            if ss.current_q < total - 1:
-                ss.current_q += 1
-            else:
-                if not ss.response_saved:
-                    save_response(ss.answers, cfg)
-                    ss.response_saved = True
-                ss.survey_complete = True
-            st.rerun()
-        return
 
     idx = ss.current_q
     if idx >= total:
@@ -478,19 +453,13 @@ def show_survey(cfg):
             
             st.markdown('<div id="action-btn-single">', unsafe_allow_html=True)
             if st.button("Next →", key=f"next_{q['id']}", disabled=not current_ans, type="primary", use_container_width=True):
-                suggestions = q.get("suggestions", {})
-                suggestion = suggestions.get(current_ans)
-                
-                if suggestion:
-                    ss.suggestion_to_show = (suggestion, q["id"], current_ans)
+                if idx < total - 1:
+                    ss.current_q += 1
                 else:
-                    if idx < total - 1:
-                        ss.current_q += 1
-                    else:
-                        if not ss.response_saved:
-                            save_response(ss.answers, cfg)
-                            ss.response_saved = True
-                        ss.survey_complete = True
+                    if not ss.response_saved:
+                        save_response(ss.answers, cfg)
+                        ss.response_saved = True
+                    ss.survey_complete = True
                 st.rerun()
             st.markdown("</div>", unsafe_allow_html=True)
 
