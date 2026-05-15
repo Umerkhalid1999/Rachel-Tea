@@ -25,13 +25,21 @@ def save_config(cfg):
 # ── Responses ──────────────────────────────────────────────────────────────────
 def save_response(answers, cfg):
     questions = cfg["questions"]
-    fieldnames = ["timestamp", "session_id"] + [q["id"] for q in questions]
+    # We include tags in the fieldnames to help with automation mapping
+    fieldnames = ["timestamp", "session_id"]
+    for q in questions:
+        tag = q.get("tag", "")
+        col_name = f"{q['id']}_{tag}" if tag else q['id']
+        fieldnames.append(col_name)
+    
     row = {
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "session_id": st.session_state.get("session_id", ""),
     }
     for q in questions:
-        row[q["id"]] = answers.get(q["id"], "")
+        tag = q.get("tag", "")
+        col_name = f"{q['id']}_{tag}" if tag else q['id']
+        row[col_name] = answers.get(q["id"], "")
     exists = os.path.exists(RESPONSES_FILE) and os.path.getsize(RESPONSES_FILE) > 0
     with open(RESPONSES_FILE, "a", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=fieldnames)
@@ -613,6 +621,7 @@ def show_admin(cfg):
             label = f"Q{i+1}: {q['text'][:52]}{'…' if len(q['text'])>52 else ''}"
             with st.expander(label):
                 cfg["questions"][i]["text"] = st.text_area("Question text", value=q["text"], key=f"qt_{i}")
+                cfg["questions"][i]["tag"]  = st.text_input("GoHighLevel Tag (for automation)", value=q.get("tag", ""), key=f"qtag_{i}")
                 types = ["single_choice", "email", "text"]
                 cfg["questions"][i]["type"] = st.selectbox(
                     "Type", types,
