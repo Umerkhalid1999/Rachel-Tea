@@ -54,7 +54,17 @@ def inject_css(p="#2D6A4F"):
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 html, body, .stApp {{ background: #FAFAFA !important; min-height: 100vh; font-family: 'Inter', sans-serif !important; }}
 [data-testid="stAppDeployButton"], #MainMenu, footer {{ display: none !important; }}
-.block-container {{ padding: 3.5rem 0 0 0 !important; max-width: 760px !important; }}
+.block-container {{ padding: 2rem 0 0 0 !important; max-width: 760px !important; }}
+@media (max-width: 640px) {{
+    .block-container {{ padding: 1rem 0 0 0 !important; }}
+    .rt-logo-text {{ font-size: 1.8rem !important; }}
+    .q-title {{ font-size: 1.25rem !important; padding: 0.8rem 1.2rem 1rem !important; }}
+    .done-headline {{ font-size: 1.2rem !important; }}
+    .offer-top {{ margin: 1rem 1rem 0.5rem !important; padding: 1.2rem !important; }}
+    .ans-wrap {{ margin-bottom: 1rem !important; }}
+    .ans-row {{ padding: 0.6rem 0.8rem !important; }}
+    .cta-bottom {{ padding: 1.2rem !important; }}
+}}
 
 /* ── Force Light Theme Text Colors (Fix for Streamlit Dark Mode) ── */
 .stApp .block-container h1, .stApp .block-container h2, .stApp .block-container h3, 
@@ -108,10 +118,10 @@ html, body, .stApp {{ background: #FAFAFA !important; min-height: 100vh; font-fa
 }}
 .rt-logo-text {{
     font-family: 'Inter', sans-serif !important;
-    font-size: 2.6rem;
+    font-size: 2.2rem;
     font-weight: 800;
     color: #3A7D44;
-    letter-spacing: -1.2px;
+    letter-spacing: -1px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -337,13 +347,13 @@ div[data-testid="stButton"] {{ margin: 0 !important; }}
 </style>
 """, unsafe_allow_html=True)
 
-EMOJIS = ["🌿","💊","🔥","🤔","❤️","🍬","🥗","🍔","📅","💩","📧","✨","😊","⚡","🌱"]
+EMOJIS = [] # Emojis removed as per client request
 
 def render_banner():
     st.markdown("""
 <div class="rt-banner-container">
     <div class="rt-logo-text">
-        <span style="color: #3A7D44; font-size: 2.8rem;">🌿</span>
+        <span style="color: #3A7D44;">🌿</span>
         <span>Rachelstea.com</span>
     </div>
     <div class="rt-logo-tagline">
@@ -441,8 +451,7 @@ def show_survey(cfg):
             with st.container():
                 st.markdown(f'<div style="display:none; margin:0; padding:0;"><span class="options-marker"></span>{style_html}</div>', unsafe_allow_html=True)
                 for i, opt in enumerate(opts):
-                    em = emojis_list[i] if i < len(emojis_list) else EMOJIS[i % len(EMOJIS)]
-                    label = f"{em}  {opt}"
+                    label = opt # Emojis removed
                     if st.button(label, key=f"opt_{q['id']}_{i}", use_container_width=True):
                         ss.answers[q["id"]] = opt
                         st.rerun()
@@ -543,26 +552,26 @@ def show_completion(cfg):
 
   <div class="ans-wrap">
     <div class="ans-head">
-      <span style="flex:1">Question</span>
-      <span>Your Answer</span>
+      <span style="flex:1">Recommendation for Your Health</span>
     </div>""", unsafe_allow_html=True)
 
     for q in questions:
         ans = ss.answers.get(q["id"], "—")
-        short_q = q["text"][:60] + ("…" if len(q["text"]) > 60 else "")
-        st.markdown(
-            f'<div class="ans-row">'
-            f'<span class="ans-q"><b>{short_q}</b></span>'
-            f'<span class="ans-a">{ans}</span>'
-            f"</div>",
-            unsafe_allow_html=True,
-        )
-        # Show suggestion in summary if it exists for this answer
         suggestions = q.get("suggestions", {})
-        if ans in suggestions:
+        suggestion = suggestions.get(ans)
+        
+        # Only show questions that have a corresponding suggestion for the chosen answer
+        if suggestion:
+            short_q = q["text"][:100] + ("…" if len(q["text"]) > 100 else "")
+            st.markdown(
+                f'<div class="ans-row" style="background: #F9FAFB; border-bottom: 1px solid #E5E7EB;">'
+                f'<span class="ans-q" style="font-weight: 700; color: #111827;">{short_q}</span>'
+                f"</div>",
+                unsafe_allow_html=True,
+            )
             st.markdown(f"""
-            <div style="background: #F3F4F6; padding: 0.8rem 1rem; margin: 0 1rem 0.8rem; border-radius: 8px; font-size: 0.85rem; color: #4B5563;">
-                💡 <b>Suggestion:</b> {suggestions[ans]}
+            <div style="background: #FFFFFF; padding: 1rem 1.2rem; border-bottom: 1px solid #E5E7EB; font-size: 0.95rem; color: #374151; line-height: 1.6;">
+                <span style="font-size: 1.2rem; margin-right: 0.5rem;">💡</span><b>Insight:</b> {suggestion}
             </div>
             """, unsafe_allow_html=True)
 
